@@ -1,0 +1,80 @@
+[project]
+name = "cnn-rotnist"
+version = "0.1.0"
+description = "Rotated MNIST experiments"
+authors = [{ name = "B.M.N. Smets", email = "b.m.n.smets@tue.nl" }]
+requires-python = ">=3.13"
+dependencies = [
+    "ipykernel>=7.2.0",
+    "ipywidgets>=8.1.8",
+    "jupyterlab>=4.5.6",
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.3",
+    "scikit-learn>=1.8.0",
+    "tqdm>=4.67.3",
+]
+
+
+[dependency-groups]
+pypi = ["torch>=2.14.1", "torchvision>=0.29.1"]
+cpu = ["torch>=2.14.1", "torchvision>=0.29.1"]
+cu11 = ["torch>=2.7.1", "torchvision>=0.22.1"]
+cu12 = ["torch>=2.14.1", "torchvision>=0.29.1"]
+cu13 = ["torch>=2.14.1", "torchvision>=0.29.1"]
+
+
+[tool.uv]
+default-groups = ["pypi"]
+conflicts = [
+    [
+        { group = "pypi" },
+        { group = "cpu" },
+        { group = "cu11" },
+        { group = "cu12" },
+        { group = "cu13" },
+    ],
+]
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cpu", group = "cpu", marker = "sys_platform != 'darwin'" },
+    { index = "pytorch-cu118", group = "cu11", marker = "sys_platform != 'darwin'" },
+    { index = "pytorch-cu126", group = "cu12", marker = "sys_platform != 'darwin'" },
+    { index = "pytorch-cu132", group = "cu13", marker = "sys_platform != 'darwin'" },
+]
+torchvision = [
+    { index = "pytorch-cpu", group = "cpu", marker = "sys_platform != 'darwin'" },
+    { index = "pytorch-cu118", group = "cu11", marker = "sys_platform != 'darwin'" },
+    { index = "pytorch-cu126", group = "cu12", marker = "sys_platform != 'darwin'" },
+    { index = "pytorch-cu132", group = "cu13", marker = "sys_platform != 'darwin'" },
+]
+
+
+### PyTorch backend indexes
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+
+[[tool.uv.index]]
+name = "pytorch-cu118"
+url = "https://download.pytorch.org/whl/cu118"
+explicit = true
+
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+
+[[tool.uv.index]]
+name = "pytorch-cu132"
+url = "https://download.pytorch.org/whl/cu132"
+explicit = true
+
+
+[tool.ty.rules]
+invalid-mutable-override = "ignore"
